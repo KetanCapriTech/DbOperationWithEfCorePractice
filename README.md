@@ -1,4 +1,4 @@
-# Database opperation
+# Database operation
   - Ef core and its major packages
   - Code first Approach
   - Linq + EF core concepts
