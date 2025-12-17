@@ -22,6 +22,23 @@ namespace DbOperationWithEfCorePractice.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Author", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AuthorId"));
+
+                    b.Property<string>("AuthorName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -30,7 +47,10 @@ namespace DbOperationWithEfCorePractice.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Author")
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("AuthorName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -55,6 +75,8 @@ namespace DbOperationWithEfCorePractice.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("LanguageId");
 
@@ -178,11 +200,19 @@ namespace DbOperationWithEfCorePractice.Migrations
 
             modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Book", b =>
                 {
+                    b.HasOne("DbOperationWithEfCorePractice.Models.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DbOperationWithEfCorePractice.Models.Language", "Language")
                         .WithMany("Books")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Author");
 
                     b.Navigation("Language");
                 });
