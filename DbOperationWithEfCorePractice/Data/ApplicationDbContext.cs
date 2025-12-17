@@ -6,7 +6,7 @@ namespace DbOperationWithEfCorePractice.Data
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+           : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,5 +33,6 @@ namespace DbOperationWithEfCorePractice.Data
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Language> Languages { get; set; }
 
+        public DbSet<Author> Authors { get; set; }
     }
 }
