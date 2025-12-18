@@ -3,6 +3,7 @@ using DbOperationWithEfCorePractice.Dtos;
 using DbOperationWithEfCorePractice.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace DbOperationWithEfCorePractice.Controllers
 {
@@ -67,7 +68,41 @@ namespace DbOperationWithEfCorePractice.Controllers
 
         }
 
-         [HttpPost("add-list-of-books")]
+        [HttpGet("get-book-eager")]
+        public async Task<IActionResult> GetLanguagesEagerLoadingExample()
+        {
+            var book = await _context.Books.FirstOrDefaultAsync();
+
+           //await _context.Entry(book).Reference(s => s.Language).LoadAsync();
+            await _context.Entry(book).Reference(s => s.Author).LoadAsync();
+
+            return Ok(book);
+        }
+
+        [HttpGet("get-book-implicit")]
+        public async Task<IActionResult> GetListImplicitLoading()
+        {
+            var langauanges = await _context.Languages.ToListAsync();
+
+            foreach(var lanaguage in langauanges)
+            {
+                _context.Entry(lanaguage).Collection(x=>x.Books).LoadAsync();
+            }
+
+            return Ok(langauanges);
+
+        }
+
+        // get data using sql query using fromSqlRaw
+        [HttpGet("get-book-sql")]
+        public async Task<IActionResult> GetBookSqlExample()
+        {
+            var book = await _context.Books.FromSqlRaw(@"SELECT * FROM public.""Books""").FirstOrDefaultAsync();
+
+            return Ok(book);
+        }
+
+        [HttpPost("add-list-of-books")]
         public async Task<IActionResult> AddBooks([FromBody] List<BookDto> model) {
 
             List<Book> books = model.Select(dto => new Book
@@ -92,8 +127,13 @@ namespace DbOperationWithEfCorePractice.Controllers
         [HttpPut("update-book")]
         public async Task<IActionResult> UpdateBook([FromQuery] int id, BookDto model)
         {
+            // eager loading (all data we will bring first)
+            // i want to get books inlcuding author table so using include for that and then i want to access author table properties so that why using thenInlcude for email
+            // one to one reletation 
             var result = await _context.Books
                 .Include(s => s.Author)
+                //.Include(l => l.Language)
+                //.ThenInclude(s => s.LanguageName)
                 .Where(s => s.Id == id).FirstOrDefaultAsync();
 
             if(result == null)
