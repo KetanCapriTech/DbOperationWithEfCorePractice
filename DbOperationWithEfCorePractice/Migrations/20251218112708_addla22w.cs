@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DbOperationWithEfCorePractice.Migrations
 {
     /// <inheritdoc />
-    public partial class addedAuthorupdfatel : Migration
+    public partial class addla22w : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

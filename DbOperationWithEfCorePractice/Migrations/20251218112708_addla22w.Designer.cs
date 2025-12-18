@@ -3,6 +3,7 @@ using System;
 using DbOperationWithEfCorePractice.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DbOperationWithEfCorePractice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251218112708_addla22w")]
+    partial class addla22w
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,94 +201,6 @@ namespace DbOperationWithEfCorePractice.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Librarian", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactNo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("HighestQualification")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsFullTime")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Librarians");
-                });
-
-            modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Library", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BookType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("BooksSection")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("LibrarianId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("NumberOfBooks")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("NumberOfBooksPerSection")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("SectionInfo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LibrarianId");
-
-                    b.ToTable("library");
-                });
-
             modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Book", b =>
                 {
                     b.HasOne("DbOperationWithEfCorePractice.Models.Author", "Author")
@@ -308,17 +223,6 @@ namespace DbOperationWithEfCorePractice.Migrations
                     b.HasOne("DbOperationWithEfCorePractice.Models.Currency", null)
                         .WithMany("BookPrices")
                         .HasForeignKey("CurrencyId");
-                });
-
-            modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Library", b =>
-                {
-                    b.HasOne("DbOperationWithEfCorePractice.Models.Librarian", "Librarian")
-                        .WithMany()
-                        .HasForeignKey("LibrarianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Librarian");
                 });
 
             modelBuilder.Entity("DbOperationWithEfCorePractice.Models.Currency", b =>
