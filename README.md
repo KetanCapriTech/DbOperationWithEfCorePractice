@@ -9,6 +9,9 @@
   - Method sytax
   - Db context
   - Api configuration and Db settings
+  - Eager loading and its syntax
+  - Explicit loading and its syntaX
+  - sqlRaw() for executing sql queries directly from ef core
 
 # Refrence and Recourses 
 Entity Framework core By : Nitesh Kaushik sir
