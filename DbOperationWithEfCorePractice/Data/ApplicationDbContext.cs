@@ -34,5 +34,7 @@ namespace DbOperationWithEfCorePractice.Data
         public DbSet<Language> Languages { get; set; }
 
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Librarian> Librarians { get; set; }
+        public DbSet<Library> library { get; set; }
     }
 }

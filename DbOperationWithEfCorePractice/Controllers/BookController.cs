@@ -26,7 +26,7 @@ namespace DbOperationWithEfCorePractice.Controllers
                 Author = new Author
                 { 
                    AuthorId = model.Author.AuthorId, 
-                  AuthorName =  model.Author.AuthorName
+                   AuthorName =  model.Author.AuthorName
                 }
                 
             };
